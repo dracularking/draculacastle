@@ -2,6 +2,7 @@ body {
     margin: 0;
     background-color: cornflowerblue ;
     background-repeat: no-repeat;
+    background-size: cover;
     color: blueviolet;
     text-align: center;
 }
