@@ -3,18 +3,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dracula Castle</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/maze.css">
-    <script src="script/maze.js"></script>
+    
     <style>
         body {
           background-image: url('img/castlevania-symphony-of-the-night.webp');
         }
+
+        #ball{
+            background: red;
+            -moz-border-radius: 50px;
+            -webkit-border-radius: 50px;
+            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+	    }
+
+        
     </style>
 </head>
 
-<body onload="onLoad();">
+<body onDocumentReady="onload();">
     
     <audio controls autoplay loop>
         <source src="music/悲境の貴公子.mp3" type="audio/mp3">
@@ -22,23 +33,69 @@
     <h1>Dracula Castle</h1>
     <p>Ha ha ha ha ha ha ha...</p>
 
-    <canvas id="mainForm"></canvas>
-    <div id="settings">
-      <table>
-        <tbody>
-          <tr>
-            <td><label for="cols">Columns:</label></td>
-            <td><input id="cols" type="text" size="5" value="20" /></td>
-          </tr><tr>
-            <td><label for="rows">Rows:</label></td>
-            <td><input id="rows" type="text" size="5" value="20" /></td>
-          </tr><tr>
-            <td>&nbsp;</td>
-            <td><input id="generate" type="button" value="Generate" /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <a href="page/maze.html">castle entrance</a>
+
+    <div id="screen">
+        <div id="ball">
+
+        </div>
+   </div>
+
+   <script>
+       var width = 1350;
+       var height =500;
+       var topVal=300;
+       var leftVal=0;
+       var dx=10;
+       var dy=10;
+       var ballWidth=50;
+       var ballHeight=50;
+       var topNegative=false;
+       var leftNegative=false;
+       var gravity=2;
+       var ball = document.getElementById("ball");
+       function gameLoop() {
+        moveBall()
+       }
+
+
+       function game() {
+        setInterval(gameLoop, 50);
+       }
+
+       function moveBall(){
+           console.log(leftVal, topVal,dy,gravity)
+           ball.style.top=topVal+'px';
+           ball.style.left=leftVal+'px';
+
+           totalHeight=topVal+ballHeight;
+           totalWidth=leftVal+ballWidth;
+
+           if(dy==0){
+               dy=gravity;
+           }
+           if (topVal>=height){
+               dy*=-1;	
+               topVal-=topVal-height
+           }
+           if(totalWidth>=width){
+               if((dx>0 && dy<0)|| (dx>0 && dy>0)){
+                   dx*=-1;
+               }
+           }
+           if(leftVal<=0 && topVal!=0 ){
+               if((dx<0 && dy>0)||(dx<0 && dy<0)){
+                   dx*=-1;
+               }
+           }
+           dy+=gravity;
+           topVal=topVal+dy
+           leftVal+=dx;
+       }
+       game();
+
+       
+   </script>
 
 </body>
 </html> 
